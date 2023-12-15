@@ -1,23 +1,34 @@
 package dominio;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
+/**
+ * Clase para representar un catalogo de zapatos serializable.
+ * @author Genesis Chicaiza
+ */
 public class CatalogoZapatos implements Serializable {
-    /**
-    @author Genesis
-    *arryalist de productos
-    */
+    
+     /**
+     * Lista que almacena los productos (zapatos) en el catalogo.
+     */
     private ArrayList<Producto> productos = new ArrayList<>();
 
-    public void agregarProducto(Producto producto) { //void para que no devuelva nada
+     /**
+     * Agrega un nuevo producto (zapato) al catalogo.
+     * 
+     * @param producto: producto se agrega al catalogo
+     */
+
+    public void agregarProducto(Producto producto) { 
         productos.add(producto);
     }
 
     /**
-     * @param n: nombre del producto a eliminar
-     * Eliminando productos
+     * Elimina un producto (zapato) del catalogo por su nombre.
+     * 
+     * @param n: El nombre del modelo de zapato que se va a eliminar.
      */
+
 
      public void eliminarProducto(String n) {   
         Producto p = new Producto(n);
@@ -42,6 +53,7 @@ public class CatalogoZapatos implements Serializable {
             System.out.println(producto);
         }
     }
+
 /**
  * graba el catalogo en un archivo
  * @param nombreArchivo: nombre del archivo donde se guarda los datos. 
@@ -57,8 +69,9 @@ public class CatalogoZapatos implements Serializable {
 
    /**
     * lee el catalogo de un archivo
-    * @param nombreArchivo: nombre de donde se lee el archivo
+    * @param nombreArchivo: nombre del archivo desde el cual se va a leer el catalogo.
     */
+ 
     public void leerDesdeArchivo(String nombreArchivo) {
         try (ObjectInputStream n = new ObjectInputStream(new FileInputStream(nombreArchivo))) {
             productos = (ArrayList<Producto>) n.readObject();

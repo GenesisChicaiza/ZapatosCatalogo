@@ -1,7 +1,6 @@
 package presentacion;
 
 import dominio.CatalogoZapatos;
-import dominio.Producto;
 import dominio.Sandalia;
 import dominio.ZapatoDeportivo;
 import dominio.ZapatoElegante;
@@ -11,20 +10,36 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+
+/**
+ * @author Genesis Chicaiza
+ * sirve como punto de entrada y coordinacion para la interaccion del usuario.
+ */
 public class Interfaz {
     private CatalogoZapatos catalogo;
     private Scanner scanner;
 
+    /**
+     * Constructor
+     * Inicializa nueva instancia de la interfaz, crea nuevo catalogo de zapatos y scanner para entrada del usuario.
+     * Realiza la lectura inicial para configurar la interfaz.
+     */
     public Interfaz() {
         catalogo = new CatalogoZapatos();
         scanner = new Scanner(System.in);
         leer();
 
     }
+    
+    /**
+ * Mostrar un menu y gestionar las opciones seleccionadas por el usuario.
+ * Menú incluye opciones para agregar, eliminar, mostrar y gestionar productos en el catalogo.
+ * Ofrece funciones para guardar y cargar el catalogo desde un archivo.
+ * Finaliza cuando el usuario elige la opción de salir (0).
+ */
 
     public void mostrarMenu() {
         int opcion;
@@ -66,7 +81,10 @@ public class Interfaz {
         } while (opcion != 0);
     }
      
-    
+    /**
+ * Leer catalogo de zapatos desde un archivo.
+ * Si el archivo existe, carga el catálogo almacenado; de lo contrario, se maneja la excepcion.
+ */
 private void leer(){
         ObjectInputStream obj;
     File file = new File("CatalogoZapatos.txt");
@@ -82,6 +100,12 @@ private void leer(){
     }
 
 }
+
+    /**
+ * Guardar catalogo de zapatos en un archivo.
+ * Si el archivo no existe, se crea; de lo contrario, se sobrescribe.
+ */
+
   private void grabar(){
 
     ObjectOutputStream obj;
@@ -98,9 +122,11 @@ private void leer(){
 
     }
 
-    /*
-     * agrega el producto que el usuario ingrese
-     */
+    /**
+ * Agregar un nuevo producto al catalogo.
+ * Solicita detalles como marca, modelo, talla y precio, y luego solicita el tipo especifico de producto.
+ * Dependiendo del tipo seleccionado,recopila informacion adicional.
+ */
     private void agregarProducto() {
         System.out.println("\nIngrese los detalles del producto:");
         System.out.print("Marca: ");
@@ -117,9 +143,7 @@ private void leer(){
         System.out.println("2. Zapato Elegante");
         System.out.println("3. Sandalia");
         int tipoProducto = obtenerEntero("Ingrese su opción: ");
-/*
- * aqui pongo lo que tiene que hacer dependiendo del numero que ingrese el usuario
- */
+
         switch (tipoProducto) {
             case 1:
                 System.out.print("Tipo de Deporte: ");
@@ -141,9 +165,10 @@ private void leer(){
         }
     }
 
-    /*
-     * metodo para eliminar producto que el usuario ha creado 
-     */
+    /**
+ * Eliminar producto del catalogo por nombre de modelo.
+ * Solicita al usuario el nombre del modelo a borrar y realiza la eliminacion correspondiente.
+ */
 
     private void  eliminarProducto(){
 
@@ -155,36 +180,41 @@ private void leer(){
       
     }
 
-    /*
-     * aqui muestra el catalgo
-     */
-
+    /**
+ * Mostrar catalogo actual de productos
+ * Imprime en la consola la lista de productos existentes en el catalogo.
+ */
     private void mostrarCatalogo() {
         System.out.println("\nCatálogo actual:");
         catalogo.mostrarCatalogo();
     }
 
-    /*
-     * aqui el usuario lo puede guardar en el carrito de compra si lo desea
-     */
+    /**
+ * Guardar catalogo en un archivo especificado.
+ * Solicita al usuario el nombre del archivo y utiliza el catalogo para escribir los datos en ese archivo.
+ */
 
     private void guardarEnArchivo() {
         System.out.print("\nIngrese el nombre del archivo para guardar el catálogo: ");
         String nombreArchivo = scanner.next();
         catalogo.escribirEnArchivo(nombreArchivo);
     }
-    /*
-     * aqui puede ver lo que tiene en el carrito
-     */
+   
+    /**
+ * Cargar catalogo desde un archivo especificado.
+ * Solicita al usuario el nombre del archivo y utiliza el catalogo para leer los datos desde ese archivo.
+ */
     private void cargarDesdeArchivo() {
         System.out.print("\nIngrese el nombre del archivo para cargar el catálogo: ");
         String nombreArchivo = scanner.next();
         catalogo.leerDesdeArchivo(nombreArchivo);
     }
 
-    /*
-     * asegura que el usuario ingrese un entero
-     */
+    /**
+ * Obtener valor entero ingresado por usuario
+ * @return valor entero ingresado
+ * retorna valor entero
+ */
     private int obtenerEntero() {
         while (true) {
             try {
@@ -193,28 +223,45 @@ private void leer(){
                 return n;
             } catch (InputMismatchException e) {
                 System.out.println("Por favor, ingrese un valor entero.");
-                scanner.nextLine(); // Limpiar el búfer del scanner.
+                scanner.nextLine(); 
             }
         }
     }
 
 
-
+    /**
+ * Asegurar de obtener valor entero
+ * @param mensaje: El mensaje a mostrar antes de solicitar la entrada del usuario.
+ * Muestra el mensaje proporcionado, solicita al usuario ingresar un valor entero y maneja excepciones de tipo de entrada incorrecta.
+ * @return El valor entero ingresado por el usuario.
+ * valor
+ */
     private int obtenerEntero(String mensaje) {
         System.out.print(mensaje);
         return obtenerEntero();
     }
 
+    /**
+ * Asegurar de obtener valor decimal
+ * @return El valor decimal ingresado por el usuario.
+ * devuelve valor decimal
+ */
     private double obtenerDouble() {
         while (true) {
             try {
                 return scanner.nextDouble();
             } catch (InputMismatchException e) {
                 System.out.println("Por favor, ingrese un valor numérico válido.");
-                scanner.next(); // Limpiar el búfer del scanner.
+                scanner.next(); 
             }
         }
     }
+
+    /**
+ * Asegurar de obtener valor booleano
+ * @return El valor booleano 
+ * devuelve valor boleano
+ */
 
     private boolean obtenerBoolean() {
         while (true) {
