@@ -1,7 +1,5 @@
 package dominio;
 
-import java.io.Serializable;
-
 /**
      * Clase que representa una sandalia, extendiendo la funcionalidad de la clase Producto.
      * @author Genesis Chicaiza
